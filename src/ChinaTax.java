@@ -1,5 +1,4 @@
 import java.io.FileNotFoundException;
-import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
@@ -7,19 +6,28 @@ import java.math.RoundingMode;
 public class ChinaTax {
 
 	public static void main(String[] args) throws FileNotFoundException {
-		BigDecimal monthlySocialSecurity =  new BigDecimal("17817").multiply(new BigDecimal("0.175"));
-		ChinaTax taxcalc = new ChinaTax();
 		
-		BigDecimal totalPackage = new BigDecimal("1800000");
-		BigDecimal monthlyAllowance= new BigDecimal("70000");
-		BigDecimal optimumBase = taxcalc.getOptimumBase(totalPackage,monthlyAllowance);
-		System.out.println("optimumBase with totalPackage="+totalPackage + ",monthlyAllowance= "+monthlyAllowance+" is ="+optimumBase);
+		ChinaTax taxcalc = new ChinaTax();
+		//https://zhidao.baidu.com/question/1735056546596979387.html 
+		BigDecimal monthlyAllowance= new BigDecimal("67000");
+
+		BigDecimal totalPackage = new BigDecimal("1700000");
+		taxcalc.getOptimumBase(totalPackage,monthlyAllowance);
+		
+		totalPackage = new BigDecimal("1800000");
+		taxcalc.getOptimumBase(totalPackage,monthlyAllowance);
+		
+		totalPackage = new BigDecimal("1900000");
+		taxcalc.getOptimumBase(totalPackage,monthlyAllowance);
+		
+		totalPackage = new BigDecimal("2000000");
+		taxcalc.getOptimumBase(totalPackage,monthlyAllowance);
 	}
 	
 	
 	public BigDecimal getOptimumBase(BigDecimal totalpackage, BigDecimal monthlyAllowance) throws FileNotFoundException{
-		BigDecimal monthlySocialSecurity =  new BigDecimal("17817").multiply(new BigDecimal("0.175"));
-		BigDecimal yearlyBase = new BigDecimal(1000000);
+		BigDecimal monthlySocialSecurity =  new BigDecimal("17817").multiply(new BigDecimal("0.175"));  //based on foreigner in Shanghai
+		BigDecimal yearlyBase = new BigDecimal(800000);
 		
 		BigDecimal currentMaxTakeHome = new BigDecimal("0");
 		BigDecimal optimumBase = new BigDecimal("0");
@@ -55,16 +63,16 @@ public class ChinaTax {
 					
 			if(actualTakeHome.compareTo(currentMaxTakeHome)>0){
 				
-				storeLast = "currentYearlyBase="+currentYearlyBase+
-				",monthlyBase="+monthlyBase+
-				",monthlyTaxableIncome="+monthlyTaxableIncome+
-				",monthlyTaxPayable="+monthlyTaxPayable+
-				",monthlyTakeHomeNet="+monthlyTakeHomeNet+
-				",yearlyBaseTakeHomeNet="+yearlyBaseTakeHomeNet+
-				",yearEndBonus="+yearEndBonus+
-				",bonusTaxPayable="+bonusTaxPayable+
-				",bonusTakeHomeNet="+bonusTakeHomeNet+
-				",actualTakeHome="+actualTakeHome;
+				storeLast = "\nYearlyBase="+currentYearlyBase+
+				"\nmonthlyBase="+monthlyBase+
+				"\nmonthlyTaxableIncome="+monthlyTaxableIncome+
+				"\nmonthlyTaxPayable="+monthlyTaxPayable+
+				"\nmonthlyTakeHomeNet="+monthlyTakeHomeNet+
+				"\nyearlyBaseTakeHomeNet="+yearlyBaseTakeHomeNet+
+				"\nyearEndBonus="+yearEndBonus+
+				"\nbonusTaxPayable="+bonusTaxPayable+
+				"\nbonusTakeHomeNet="+bonusTakeHomeNet+
+				"\nactualTakeHome="+actualTakeHome;
 			
 				
 				//System.out.println("new record=" + storeLast);
@@ -75,7 +83,7 @@ public class ChinaTax {
 				//System.out.println("Skipping monthlyBase="+monthlyBase +" Because actual take home is ="+actualTakeHome + " Previous Take home is " + storeLast);
 			}
 		}
-		System.out.println("***Best combination is :" + storeLast);
+		System.out.println("total yearly package="+totalpackage+", monthly allowance="+monthlyAllowance+". Optimum combination is :" + storeLast);
 		return optimumBase;
 	}
 	
@@ -102,7 +110,7 @@ public class ChinaTax {
 	public BigDecimal calculateMonthlyTax(BigDecimal monthlyIncome){
 
 		//System.out.println("monthly Income=" +monthlyIncome);
-		BigDecimal standardDeduction = new BigDecimal("4800");
+		BigDecimal standardDeduction = new BigDecimal("4800");  //based on foreigner in Shanghai
 		
 		BigDecimal taxRate= getTaxRate(monthlyIncome);
 		BigDecimal quickDeduction= getQuickDeduction(monthlyIncome);
