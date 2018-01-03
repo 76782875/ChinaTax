@@ -54,7 +54,7 @@ public class ChinaTax {
 			
 					
 			if(actualTakeHome.compareTo(currentMaxTakeHome)>0){
-				System.out.println("======================");
+				
 				storeLast = "currentYearlyBase="+currentYearlyBase+
 				",monthlyBase="+monthlyBase+
 				",monthlyTaxableIncome="+monthlyTaxableIncome+
@@ -67,7 +67,7 @@ public class ChinaTax {
 				",actualTakeHome="+actualTakeHome;
 			
 				
-				System.out.println("new record=" + storeLast);
+				//System.out.println("new record=" + storeLast);
 				//out.println(currentYearlyBase+","+monthlyBase+","+monthlyTaxableIncome+","+monthlyTaxPayable+","+monthlyTakeHomeNet+","+yearlyBaseTakeHomeNet+","+yearEndBonus+","+bonusTaxPayable+","+bonusTakeHomeNet+",="+actualTakeHome);
 				currentMaxTakeHome = actualTakeHome;
 				optimumBase =  new BigDecimal(currentYearlyBase);
