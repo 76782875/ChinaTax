@@ -5,11 +5,15 @@ import java.math.RoundingMode;
 
 public class ChinaTax {
 
+	
+	static BigDecimal monthlySocialSecurity =  new BigDecimal("17817").multiply(new BigDecimal("0.175"));  //based on foreigner in Shanghai
+	static BigDecimal foreignerStartingPoint = new BigDecimal("4800");  //based on foreigner in Shanghai
+	
 	public static void main(String[] args) throws FileNotFoundException {
 		
 		ChinaTax taxcalc = new ChinaTax();
 		//https://zhidao.baidu.com/question/1735056546596979387.html 
-		BigDecimal monthlyAllowance= new BigDecimal("67000");
+		BigDecimal monthlyAllowance= new BigDecimal("60000");
 
 		BigDecimal totalPackage = new BigDecimal("1700000");
 		taxcalc.getOptimumBase(totalPackage,monthlyAllowance);
@@ -26,14 +30,16 @@ public class ChinaTax {
 	
 	
 	public BigDecimal getOptimumBase(BigDecimal totalpackage, BigDecimal monthlyAllowance) throws FileNotFoundException{
-		BigDecimal monthlySocialSecurity =  new BigDecimal("17817").multiply(new BigDecimal("0.175"));  //based on foreigner in Shanghai
 		BigDecimal yearlyBase = new BigDecimal(800000);
 		
 		BigDecimal currentMaxTakeHome = new BigDecimal("0");
 		BigDecimal optimumBase = new BigDecimal("0");
 		
+		System.out.println("total yearly package="+totalpackage+", monthly allowance="+monthlyAllowance);
+		
 		int totalInt = totalpackage.intValue();
 		int yearlyBaseInt = yearlyBase.intValue();
+		int allowanceInt = monthlyAllowance.intValue();
 		
 		String storeLast = "";
 		
@@ -41,18 +47,18 @@ public class ChinaTax {
 		//out.println("currentYearlyBase,monthlyBase,monthlyTaxableIncome,monthlyTaxPayable,monthlyTakeHomeNet,yearlyBaseTakeHomeNet,yearEndBonus,bonusTaxPayable,bonusTakeHomeNet,actualTakeHome");
 		
 		
-		for(int currentYearlyBase=yearlyBaseInt; currentYearlyBase<totalInt; currentYearlyBase++){
+		for(int currentYearlyBase=allowanceInt; currentYearlyBase<totalInt; currentYearlyBase++){
 			
 			int bonusInt = totalInt-currentYearlyBase;
 			//System.out.println("yearlyBaseInt="+i+",yearlyBonus="+bonusInt); 
 			BigDecimal yearEndBonus = new BigDecimal(bonusInt);
-			BigDecimal bonusTaxPayable = calculateBonusTax(yearEndBonus);
+			BigDecimal bonusTaxPayable = calculateBonusTax(yearEndBonus, false);
 			BigDecimal bonusTakeHomeNet = yearEndBonus.subtract(bonusTaxPayable);
 			
 			
 			BigDecimal monthlyBase = new BigDecimal(currentYearlyBase).divide(new BigDecimal("12"), RoundingMode.HALF_UP);
 			BigDecimal monthlyTaxableIncome = monthlyBase.subtract(monthlyAllowance);
-			BigDecimal monthlyTaxPayable = calculateMonthlyTax(monthlyTaxableIncome);
+			BigDecimal monthlyTaxPayable = calculateMonthlyTax(monthlyTaxableIncome, false);
 			BigDecimal monthlyTakeHomeNet = monthlyTaxableIncome.subtract(monthlyTaxPayable).subtract(monthlySocialSecurity);
 			
 			BigDecimal yearlyBaseTakeHomeNet = monthlyTakeHomeNet.multiply(new BigDecimal("12"));
@@ -72,7 +78,9 @@ public class ChinaTax {
 				"\nyearEndBonus="+yearEndBonus+
 				"\nbonusTaxPayable="+bonusTaxPayable+
 				"\nbonusTakeHomeNet="+bonusTakeHomeNet+
-				"\nactualTakeHome="+actualTakeHome;
+				"\n******actualTakeHome*********"+
+				"\n"+actualTakeHome+
+				"\n*****************************";
 			
 				
 				//System.out.println("new record=" + storeLast);
@@ -83,43 +91,50 @@ public class ChinaTax {
 				//System.out.println("Skipping monthlyBase="+monthlyBase +" Because actual take home is ="+actualTakeHome + " Previous Take home is " + storeLast);
 			}
 		}
-		System.out.println("total yearly package="+totalpackage+", monthly allowance="+monthlyAllowance+". Optimum combination is :" + storeLast);
+		System.out.println("Optimum combination is :" + storeLast);
 		return optimumBase;
 	}
 	
 	
-	public BigDecimal calculateBonusTax(BigDecimal totalBonus){
+	public BigDecimal calculateBonusTax(BigDecimal totalBonus, boolean showLog){
 		
-		//System.out.println("total Bonus=" +totalBonus);
 		
 		totalBonus.setScale(2, RoundingMode.HALF_UP);
 		BigDecimal divisor =  new BigDecimal("12");
 		divisor.setScale(2, RoundingMode.HALF_UP);
 		BigDecimal monthlyBonus = totalBonus.divide(divisor,2);
-		//System.out.println("Bonus monthly="+monthlyBonus);
 		BigDecimal taxRate = getTaxRate(monthlyBonus);
 		BigDecimal quickDeduction = getQuickDeduction(monthlyBonus);
-		//System.out.println("taxRate="+taxRate+",quickDeduction="+quickDeduction);
-		
 		BigDecimal actualTax = totalBonus.multiply(taxRate).subtract(quickDeduction);
-		//System.out.println("actualTax="+actualTax);
+		BigDecimal monthlyTakeHome = totalBonus.subtract(actualTax);
+		
+		if(showLog) {
+			System.out.println("total Bonus=" +totalBonus);
+			System.out.println("Bonus monthly="+monthlyBonus);
+			System.out.println("taxRate="+taxRate+",quickDeduction="+quickDeduction);
+			System.out.println("actualTax="+actualTax);
+			System.out.println("monthlyTakeHome="+monthlyTakeHome);
+		}
 		
 		return actualTax;
 	}
 	
-	public BigDecimal calculateMonthlyTax(BigDecimal monthlyIncome){
+	public BigDecimal calculateMonthlyTax(BigDecimal monthlyIncome, boolean showLog){
 
-		//System.out.println("monthly Income=" +monthlyIncome);
-		BigDecimal standardDeduction = new BigDecimal("4800");  //based on foreigner in Shanghai
-		
+
 		BigDecimal taxRate= getTaxRate(monthlyIncome);
 		BigDecimal quickDeduction= getQuickDeduction(monthlyIncome);
-		//System.out.println("tax Rate=" +taxRate + ",standardDeduction="+standardDeduction +",quickDeduction="+quickDeduction);
-				
-		BigDecimal taxableIncome = monthlyIncome.subtract(standardDeduction);
-		
+		BigDecimal taxableIncome = monthlyIncome.subtract(foreignerStartingPoint).subtract(monthlySocialSecurity);
 		BigDecimal actualTax = taxableIncome.multiply(taxRate).subtract(quickDeduction);
-		//System.out.println("actualTax="+actualTax);
+		
+		BigDecimal actualTakeHome = monthlyIncome.subtract(actualTax).subtract(monthlySocialSecurity);
+		
+		if(showLog) {
+			System.out.println("taxable Income=" +monthlyIncome);
+			System.out.println("tax Rate=" +taxRate + ",foreignerStartingPoint="+foreignerStartingPoint +",quickDeduction="+quickDeduction);
+			System.out.println("actualTax="+actualTax);
+			System.out.println("BonusTakehome="+actualTakeHome);
+		}
 		
 		return actualTax;
 	}
