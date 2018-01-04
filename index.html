@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>上海外籍人士年薪方案计算器2018</title>
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js">
+	</script>
+	<script src="chinatax.js">
+	</script>
+</head>
+<body>
+	<div class="calculator box">
+		<h1 class="h4 mainTitle">上海年薪方案计算器2018</h1>
+		<hr>
+		<h3>参数设置</h3>
+		<table>
+			<tbody>
+				<tr>
+					<td>薪资总配套</td>
+					<td><input id="totalPackage" name="" type="text" value="2000000"><span>元</span></td>
+				</tr>
+				<tr>
+					<td>每月住房补贴</td>
+					<td><input id="rentalAllowance" name="" type="text" value="15000"><span>元</span></td>
+				</tr>
+				<tr>
+					<td>每月伙食补贴</td>
+					<td><input id="mealAllowance" name="" type="text" value="0"><span>元</span></td>
+				</tr>
+				<tr>
+					<td>一次性搬迁费</td>
+					<td><input id="yearlymovingAllowance" name="" type="text" value="0"><span>元</span></td>
+				</tr>
+				<tr>
+					<td>每月洗衣费</td>
+					<td><input id="washingAllowance" name="" type="text" value="6000"><span>元</span></td>
+				</tr>
+				<tr>
+					<td>每年探亲费</td>
+					<td><input id="yearlyAirTicketAllowance" name="" type="text" value="40000"><span>元</span></td>
+					<td>每月</td>
+					<td><label id="lblMonthlyyAirTicketAllowance">0</label><span>元</span></td>
+				</tr>
+				<tr>
+					<td>每月语言训练补贴</td>
+					<td><input id="languageAllowance" name="" type="text" value="0"><span>元</span></td>
+				</tr>
+				<tr>
+					<td>每年子女教育费</td>
+					<td><input id="yearlyfamilyEducationAllowance" name="" type="text" value="400000"><span>元</span></td>
+					<td>每月</td>
+					<td><label id="lblMonthlyfamilyEducationAllowance">0</label><span>元</span></td>
+				</tr>
+				<tr>
+					<td>各项社会保险费</td>
+					<td><input id="monthlySocialSecurity" name="" type="text" value="3117"><span>元</span></td>
+				</tr>
+				<tr>
+					<td>季度奖百分比</td>
+					<td><input id="quarterlyBonusRate" name="" type="text" value="30"><span>%</span></td>
+					<td>在3，6，9，12月发放</td>
+				</tr>
+				<tr>
+					<td>每月可报销基本工资最高百分比</td>
+					<td><input id="monthlyAllowanceRate" name="" type="text" value="35"><span>%</span></td>
+				</tr>
+				<tr>
+					<td>每月额外生活必需金额</td>
+					<td><input id="monthlyMinimumAddOnCash" name="" type="text" value="40000"><span>元</span></td>
+					<td>(除去读书租房等刚需部分)</td>
+				</tr>
+				<tr>
+					<td class="label"></td>
+					<td>
+						<div class="submitLine clearfix">
+							<a href="javascript:;" id="btnCalc" onclick="btnCalc()">计算最佳方案</a> <a href="javascript:;" id="rst" onclick="btnReset()" target="_self">重置</a>
+						</div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<hr>
+
+				
+		<h3>个人所得税计算结果</h3>
+		<table class="table">
+			<tbody>
+				<tr>
+					<td>薪资总配套</td>
+					<td><label id="lblTotalPackage">0</label> <span>元</span></td>
+				</tr>
+				<tr>
+					<td>季度奖百分比</td>
+					<td><label id="lblQuarterlyBonusRate">0</label> <span>%</span></td>
+				</tr>
+				<tr>
+					<td>每月可报销基本工资最高百分比</td>
+					<td><label id="lblMonthlyAllowanceRate">0</label> <span>%</span></td>
+				</tr>
+				<tr>
+					<td>每月额外生活必需</td>
+					<td><label id="lblMonthlyMinimumAddOnCash">0</label> <span>元</span></td>
+					<td>(除去读书租房等刚需部分)</td>
+				</tr>
+				<tr>
+					<td>季度奖月工资起征点</td>
+					<td><label id="lblForeignerStartingPoint">4800</label> <span>元</span></td>
+				</tr>
+				<tr>
+					<td>各项社会保险费</td>
+					<td><label id="lblMonthlySocialSecurity">3117</label><span>元</span></td>
+				</tr>
+				
+				<tr>
+					<td>每月总报销额</td>
+					<td><label id="lblMonthlyTotalAllowance">0</label> <span>元</span></td>
+					<td>(以实报实销或者非现金方式）</td>
+				</tr>
+				
+				<tr>
+					<td>全年总工资（包含季度奖）</td>
+					<td><label id="lblTotalBase">0</label> <span>元</span></td>
+				</tr>
+				<tr>
+					<td colspan=10><hr></td>
+				</tr>
+				<tr>
+					<td>平常月税前工资</td>
+					<td><label id="lblMonthlyBase8">0</label> <span>元</span></td>
+					<td>平常月指1，2，4，5，7，8，10，11这8个月</td>
+				</tr>
+
+				<tr>
+					<td>平常月工资应纳税额</td>
+					<td><label id="lblMonthlyTaxableIncome8">0</label> <span></span></td>
+					<td> = 平常月税前工资 - 每月总报销额 </td>
+				</tr>
+				<tr>
+					<td>平常月工资对应税率</td>
+					<td><label id="lblMonthlyTaxRate8">0</label> <span>%</span></td>
+				</tr>
+				<tr>
+					<td>平常月速算扣除数</td>
+					<td><label id="lblMonthlyQuickDeduction8">0</label> <span>元</span></td>
+				</tr>
+				<tr>
+					<td>平常月应纳税</td>
+					<td><label id="lblMonthlyTaxPayable8">0</label> <span>元</span></td>
+					<td> = (平常月工资应纳税额 - 各项社会保险费  - 月资起征点) * 平常月工资对应税率 - 平常月速算扣除数 </td>
+				</tr>
+				<tr>
+					<td>平常月税后收入</td>
+					<td><strong><label id="lblMonthlyTakeHomeNet8">0</label> <span>元</span></strong></td>
+					<td> = 平常月税前工资 - 平常月应纳税 - 每月总报销额 - 各项社会保险费 </td>
+				</tr>
+				<tr>
+					<td colspan=10><hr></td>
+				</tr>
+				<tr>
+					<td>季度奖月税前工资</td>
+					<td><label id="lblMonthlyBase4">0</label> <span>元</span></td>
+					<td>平常月指3，6，9，12这4个月</td>
+				</tr>
+				
+				<tr>
+					<td>季度奖月各项社会保险费</td>
+					<td><label id="lblMonthlySocialSecurity4">3117</label><span>元</span></td>
+				</tr>
+				<tr>
+					<td>季度奖月工资应纳税额</td>
+					<td><label id="lblMonthlyTaxableIncome4">0</label> <span></span></td>
+				</tr>
+				<tr>
+					<td>季度奖月工资对应税率</td>
+					<td><label id="lblMonthlyTaxRate4">0</label> <span>%</span></td>
+				</tr>
+				<tr>
+					<td>季度奖月速算扣除数</td>
+					<td><label id="lblMonthlyQuickDeduction4">0</label> <span>元</span></td>
+				</tr>
+				<tr>
+					<td>季度奖月应纳税</td>
+					<td><label id="lblMonthlyTaxPayable4">0</label> <span>元</span></td>
+					<td> = (季度奖月工资应纳税额 - 各项社会保险费  - 月资起征点) * 季度奖月工资对应税率 - 季度奖月速算扣除数 </td>
+				</tr>
+				<tr>
+					<td>季度奖税后收入（除去每月总报销额）</td>
+					<td><strong><label id="lblMonthlyTakeHomeNet4">0</label> <span>元</span></strong></td>
+					<td> = 季度奖月税前工资 - 季度奖月应纳税 - 每月总报销额 - 各项社会保险费 </td>
+				</tr>
+				<tr>
+					<td colspan=10><hr></td>
+				</tr>
+				<tr>
+					<td>年税后工资总收入</td>
+					<td><strong><label id="lblYearlyBaseTakeHomeNet">0</label> <span>元</span></strong></td>
+				</tr>
+				<tr>
+					<td colspan=10><hr></td>
+				</tr>
+				<tr>
+					<td>年终奖</td>
+					<td><label id="lblYearEndBonus">0</label> <span>元</span></td>
+				</tr>
+				<tr>
+					<td>年终奖对应税率</td>
+					<td><label id="lblBonusTaxRate">0</label> <span>%</span></td>
+					<td> = (年终奖 ) / 12 找对应税率</td>
+				</tr>
+					<tr>
+					<td>年终奖税额速算扣除数</td>
+					<td><label id="lblBonusQuickDeduction">0</label> <span>元</span></td>
+					<td> = (年终奖 ) / 12 找对应速算扣除数</td>
+				</tr>
+				<tr>
+					<td>年终奖应纳税额</td>
+					<td><label id="lblBonusTaxPayable">0</label> <span>元</span></td>
+					<td> = (年终奖 ) * 年终奖对应税率 - 年终奖税额速算扣除数 </td>
+				</tr>
+				<tr>
+					<td>年终奖税后收入</td>
+					<td><strong><label id="lblBonusTakeHomeNet">0</label> <span>元</span></strong></td>
+				</tr>
+				<tr>
+					<td colspan=10><hr></td>
+				</tr>
+				<tr>
+					<td>全年税后总收入（除去每月总报销额）</td>
+					<td><strong><label id="lblActualTakeHome">0</label> <span>元</span></strong></td>
+					<td> = 年终奖税后收入 + 年税后工资总收入 </td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+</html>
