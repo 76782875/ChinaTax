@@ -13,8 +13,17 @@ public class ChinaTaxCN {
 		
 		ChinaTaxCN taxcalc = new ChinaTaxCN();
 		//https://zhidao.baidu.com/question/1735056546596979387.html 
-		BigDecimal monthlyAllowance= new BigDecimal("60000");
-
+		System.out.println("****************************");
+		System.out.println("每月住房补贴=15000");
+		System.out.println("每月伙食补贴=10000");
+		System.out.println("一次性搬迁费=0");
+		System.out.println("每月洗衣费=6000 （每天=200）");
+		System.out.println("每年回新加坡探亲费两次=40000， 分摊到每月=3333 （按新加坡航空票费）");
+		System.out.println("每月语言训练费=0");
+		System.out.println("每年子女教育费=400000，分摊到每月= 33333 ");
+		System.out.println("每月总报销额 = 67666 ");
+		BigDecimal monthlyAllowance= new BigDecimal("67666");
+		System.out.println("*****************************");
 		BigDecimal totalPackage = new BigDecimal("1700000");
 		taxcalc.getOptimumBase(totalPackage,monthlyAllowance);
 		
