@@ -119,19 +119,20 @@ public class ChinaTax {
 	
 	public BigDecimal calculateMonthlyTax(BigDecimal monthlyIncome, boolean showLog){
 
-
-		BigDecimal taxRate= getTaxRate(monthlyIncome);
-		BigDecimal quickDeduction= getQuickDeduction(monthlyIncome);
 		BigDecimal taxableIncome = monthlyIncome.subtract(foreignerStartingPoint).subtract(monthlySocialSecurity);
+		
+		BigDecimal quickDeduction= getQuickDeduction(taxableIncome);
+		BigDecimal taxRate= getTaxRate(taxableIncome);
 		BigDecimal actualTax = taxableIncome.multiply(taxRate).subtract(quickDeduction);
 		
 		BigDecimal actualTakeHome = monthlyIncome.subtract(actualTax).subtract(monthlySocialSecurity);
 		
 		if(showLog) {
-			System.out.println("taxable Income=" +monthlyIncome);
+			System.out.println("monthlyIncome=" +monthlyIncome);
+			System.out.println("taxableIncome=" +taxableIncome);
 			System.out.println("tax Rate=" +taxRate + ",foreignerStartingPoint="+foreignerStartingPoint +",quickDeduction="+quickDeduction);
 			System.out.println("actualTax="+actualTax);
-			System.out.println("BonusTakehome="+actualTakeHome);
+			System.out.println("monthlyTakehome="+actualTakeHome);
 		}
 		
 		return actualTax;

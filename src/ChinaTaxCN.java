@@ -128,10 +128,10 @@ public class ChinaTaxCN {
 	
 	public BigDecimal calculateMonthlyTax(BigDecimal monthlyIncome, boolean showLog){
 
-
-		BigDecimal taxRate= getTaxRate(monthlyIncome);
-		BigDecimal quickDeduction= getQuickDeduction(monthlyIncome);
 		BigDecimal taxableIncome = monthlyIncome.subtract(foreignerStartingPoint).subtract(monthlySocialSecurity);
+		
+		BigDecimal quickDeduction= getQuickDeduction(taxableIncome);
+		BigDecimal taxRate= getTaxRate(taxableIncome);
 		BigDecimal actualTax = taxableIncome.multiply(taxRate).subtract(quickDeduction);
 		
 		BigDecimal actualTakeHome = monthlyIncome.subtract(actualTax).subtract(monthlySocialSecurity);
