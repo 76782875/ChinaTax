@@ -281,6 +281,11 @@ function btnCalc() {
 		    monthlyTaxPayablelbl8 = monthlyTaxPayable8;
 		    monthlyTakeHomeNetlbl8 = monthlyTakeHomeNet8;
 		    
+		    monthlyBaselbl = monthlyBase;
+		    monthlyTaxableIncomelbl = monthlyTaxableIncome;
+		    monthlyTaxPayablelbl = monthlyTaxPayable;
+		    monthlyTakeHomeNetlbl = monthlyTakeHomeNet;
+		    
 		    yearlyBaseTakeHomeNetlbl = yearlyBaseTakeHomeNet;
 		    
 			currentMaxTakeHome = actualTakeHome;
