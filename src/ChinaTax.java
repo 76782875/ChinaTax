@@ -14,7 +14,7 @@ public class ChinaTax {
 		ChinaTax taxcalc = new ChinaTax();
 		//https://zhidao.baidu.com/question/1735056546596979387.html 
 		BigDecimal rentalAllowance = new BigDecimal("15000");
-		BigDecimal mealAllowance = new BigDecimal("15000");
+		BigDecimal mealAllowance = new BigDecimal("10000");
 		BigDecimal washingAllowance = new BigDecimal("6000");
 		BigDecimal languageAllowance = new BigDecimal("0");
 		BigDecimal yearlymovingAllowance = new BigDecimal("0");

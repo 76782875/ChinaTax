@@ -16,7 +16,7 @@ public class ChinaTaxCN {
 		System.out.println("****************************");
 
 		BigDecimal rentalAllowance = new BigDecimal("15000");
-		BigDecimal mealAllowance = new BigDecimal("10000");
+		BigDecimal mealAllowance = new BigDecimal("0");
 		BigDecimal washingAllowance = new BigDecimal("6000");
 		BigDecimal languageAllowance = new BigDecimal("0");
 		BigDecimal yearlymovingAllowance = new BigDecimal("0");
@@ -28,6 +28,9 @@ public class ChinaTaxCN {
 		
 		BigDecimal monthlyTotalAllowance= rentalAllowance.add(mealAllowance).add(washingAllowance).add(monthlyyAirTicketAllowance).add(monthlyfamilyEducationAllowance).add(languageAllowance).add(monthlymovingAllowance);
 		
+		BigDecimal quarterlyBonusRate = new BigDecimal("0.30");
+		BigDecimal monthlyMinimumCashAddon= new BigDecimal("40000");
+		
 		System.out.println("每月住房补贴="+rentalAllowance);
 		System.out.println("每月伙食补贴="+mealAllowance);
 		System.out.println("一次性搬迁费=0");
@@ -36,32 +39,33 @@ public class ChinaTaxCN {
 		System.out.println("每月语言训练费=0");
 		System.out.println("每年子女教育费="+yearlyfamilyEducationAllowance+"，分摊到每月= "+monthlyfamilyEducationAllowance+" ");
 		System.out.println("每月总报销额 = "+monthlyTotalAllowance);
-		
+		System.out.println("季度奖百分比 = "+quarterlyBonusRate.multiply(new BigDecimal(100))+ "%");
+		System.out.println("每月额外生活必需金额 = "+monthlyMinimumCashAddon);
 		System.out.println("*****************************");
 		
-		BigDecimal totalPackage = new BigDecimal("1700000");
-		taxcalc.getOptimumBase(totalPackage,monthlyTotalAllowance);
+		BigDecimal minimumTakeHomeCash = monthlyTotalAllowance.add(monthlyMinimumCashAddon);
 		
-		totalPackage = new BigDecimal("1800000");
-		taxcalc.getOptimumBase(totalPackage,monthlyTotalAllowance);
 		
-		totalPackage = new BigDecimal("1900000");
-		taxcalc.getOptimumBase(totalPackage,monthlyTotalAllowance);
+		BigDecimal totalPackage = new BigDecimal("1900000");
 		
-		totalPackage = new BigDecimal("2000000");
-		taxcalc.getOptimumBase(totalPackage,monthlyTotalAllowance);
+		while(totalPackage.compareTo(new BigDecimal(2000000)) <= 0 ){
+			taxcalc.getOptimumBase(totalPackage,minimumTakeHomeCash, quarterlyBonusRate);
+			totalPackage = totalPackage.add(new BigDecimal("100000"));
+		}
 	}
 	
 	
-	public BigDecimal getOptimumBase(BigDecimal totalpackage, BigDecimal monthlyAllowance) throws FileNotFoundException{
+	public BigDecimal getOptimumBase(BigDecimal totalpackage, BigDecimal monthlyMinimumCash, BigDecimal quarterlyBonusRate) throws FileNotFoundException{
 
 		BigDecimal currentMaxTakeHome = new BigDecimal("0");
 		BigDecimal optimumBase = new BigDecimal("0");
 		
-		System.out.println("年薪加花红="+totalpackage+", 每月可报销额度="+monthlyAllowance);
+		System.out.println("年薪加年终奖="+totalpackage+", 每月最低要求="+monthlyMinimumCash+"，年薪加年终奖="+totalpackage+"季度奖百分比 = "+quarterlyBonusRate.multiply(new BigDecimal(100))+ "%");
 		
 		int totalInt = totalpackage.intValue();
-		int allowanceInt = monthlyAllowance.intValue();
+		int yearlyMinimumCashInt = monthlyMinimumCash.intValue() * 12 ;
+		
+		BigDecimal allowanceRate = new BigDecimal("0.35");
 		
 		String storeLast = "";
 		
@@ -69,7 +73,7 @@ public class ChinaTaxCN {
 		//out.println("currentYearlyBase,monthlyBase,monthlyTaxableIncome,monthlyTaxPayable,monthlyTakeHomeNet,yearlyBaseTakeHomeNet,yearEndBonus,bonusTaxPayable,bonusTakeHomeNet,actualTakeHome");
 		
 		
-		for(int currentYearlyBase=allowanceInt; currentYearlyBase<totalInt; currentYearlyBase++){
+		for(int currentYearlyBase=yearlyMinimumCashInt; currentYearlyBase<totalInt; currentYearlyBase++){
 			
 			int bonusInt = totalInt-currentYearlyBase;
 			//System.out.println("yearlyBaseInt="+i+",yearlyBonus="+bonusInt); 
@@ -77,31 +81,100 @@ public class ChinaTaxCN {
 			BigDecimal bonusTaxPayable = calculateBonusTax(yearEndBonus, false);
 			BigDecimal bonusTakeHomeNet = yearEndBonus.subtract(bonusTaxPayable);
 			
+			BigDecimal yearlyBaseTakeHomeNet = BigDecimal.ZERO;
 			
-			BigDecimal monthlyBase = new BigDecimal(currentYearlyBase).divide(new BigDecimal("12"), RoundingMode.HALF_UP);
-			BigDecimal monthlyTaxableIncome = monthlyBase.subtract(monthlyAllowance);
-			BigDecimal monthlyTaxPayable = calculateMonthlyTax(monthlyTaxableIncome, false);
-			BigDecimal monthlyTakeHomeNet = monthlyTaxableIncome.subtract(monthlyTaxPayable).subtract(monthlySocialSecurity);
+			BigDecimal monthlyBase = BigDecimal.ZERO;
+			BigDecimal monthlyTaxPayable = BigDecimal.ZERO;
+			BigDecimal monthlyTakeHomeNet = BigDecimal.ZERO;
+			BigDecimal monthlyTaxableIncome = BigDecimal.ZERO;
 			
-			BigDecimal yearlyBaseTakeHomeNet = monthlyTakeHomeNet.multiply(new BigDecimal("12"));
+			BigDecimal monthlyBase8 = BigDecimal.ZERO;
+			BigDecimal monthlyTaxableIncome8 = BigDecimal.ZERO;
+			BigDecimal monthlyTaxPayable8 = BigDecimal.ZERO;
+			BigDecimal monthlyTakeHomeNet8 = BigDecimal.ZERO;
+			BigDecimal monthTakeHomeNet8 = BigDecimal.ZERO;
+			
+			BigDecimal monthlyBase4 = BigDecimal.ZERO;
+			BigDecimal monthlyTaxableIncome4 = BigDecimal.ZERO;
+			BigDecimal monthlyTaxPayable4 = BigDecimal.ZERO;
+			BigDecimal monthlyTakeHomeNet4 = BigDecimal.ZERO;
+			BigDecimal monthTakeHomeNet4 = BigDecimal.ZERO;
+		
+			if(quarterlyBonusRate.compareTo(BigDecimal.ZERO) > 0) {
+				monthlyBase8 = new BigDecimal(currentYearlyBase).divide(new BigDecimal("12").multiply(quarterlyBonusRate.add(BigDecimal.ONE)), RoundingMode.HALF_UP);
+				
+				if(monthlyBase8.compareTo(monthlyMinimumCash) <0){
+					continue;
+				}
+				
+				BigDecimal myMonthlyAllowance = (new BigDecimal(monthlyBase8.intValue())).multiply(allowanceRate);
+				monthlyTaxableIncome8 = monthlyBase8.subtract(myMonthlyAllowance);
+				monthlyTaxPayable8 = calculateMonthlyTax(monthlyTaxableIncome8, false);
+				monthlyTakeHomeNet8 = monthlyTaxableIncome8.subtract(monthlyTaxPayable8).subtract(monthlySocialSecurity);
+				monthTakeHomeNet8 = monthlyTakeHomeNet8.multiply(new BigDecimal("8"));
+				
+				
+				monthlyBase4 = (new BigDecimal(monthlyBase8.intValue())).multiply(BigDecimal.valueOf(3)).multiply(quarterlyBonusRate).add((new BigDecimal(monthlyBase8.intValue())));
+				monthlyTaxableIncome4 = monthlyBase4.subtract(myMonthlyAllowance);
+				monthlyTaxPayable4 = calculateMonthlyTax(monthlyTaxableIncome4, false);
+				monthlyTakeHomeNet4 = monthlyTaxableIncome4.subtract(monthlyTaxPayable4).subtract(monthlySocialSecurity);
+				monthTakeHomeNet4 = monthlyTakeHomeNet4.multiply(new BigDecimal("4"));
+				
+				yearlyBaseTakeHomeNet = monthTakeHomeNet8.add(monthTakeHomeNet4);
+				
+			}else{
+				
+				monthlyBase = new BigDecimal(currentYearlyBase).divide(new BigDecimal("12"), RoundingMode.HALF_UP);
+				
+				if(monthlyBase.compareTo(monthlyMinimumCash) <0){
+					continue;
+				}
+				
+				BigDecimal myMonthlyAllowance = (new BigDecimal(monthlyBase.intValue())).multiply(allowanceRate);
+				monthlyTaxableIncome = monthlyBase8.subtract(myMonthlyAllowance);
+				monthlyTaxPayable = calculateMonthlyTax(monthlyTaxableIncome, false);
+				monthlyTakeHomeNet = monthlyTaxableIncome.subtract(monthlyTaxPayable).subtract(monthlySocialSecurity);
+				
+				yearlyBaseTakeHomeNet = monthlyTakeHomeNet.multiply(new BigDecimal("12"));
+			}
 			
 			BigDecimal actualTakeHome = yearlyBaseTakeHomeNet.add(bonusTakeHomeNet);
 			
-					
 			if(actualTakeHome.compareTo(currentMaxTakeHome)>0){
 				
-				storeLast = "\n全年总工资（包含季度奖）="+currentYearlyBase+
-				"\n月应发工资="+monthlyBase+
-				"\n月工资应纳税额="+monthlyTaxableIncome+
-				"\n月应纳税="+monthlyTaxPayable+
-				"\n月税后收入="+monthlyTakeHomeNet+
-				"\n年税后工资总收入="+yearlyBaseTakeHomeNet+
-				"\n年终奖="+yearEndBonus+
-				"\n年终奖应纳税额="+bonusTaxPayable+
-				"\n年终奖税后收入="+bonusTakeHomeNet+
-				"\n******全年税后总收入*********"+
-				"\n"+actualTakeHome+
-				"\n*****************************";
+				if(quarterlyBonusRate.compareTo(BigDecimal.ZERO) > 0) {
+					storeLast = "\n全年总工资（包含季度奖）="+currentYearlyBase+
+							"\n平常月应发工资="+monthlyBase8+
+							"\n平常月工资应纳税额="+monthlyTaxableIncome8+
+							"\n平常月应纳税="+monthlyTaxPayable8+
+							"\n平常月税后收入="+monthlyTakeHomeNet8+
+							"\n平常月税后收入8个月="+monthTakeHomeNet8+
+							"\n季度奖月应发工资="+monthlyBase4+
+							"\n季度奖工资应纳税额="+monthlyTaxableIncome4+
+							"\n季度奖应纳税="+monthlyTaxPayable4+
+							"\n季度奖税后收入="+monthlyTakeHomeNet4+
+							"\n季度奖税后收入4个月="+monthTakeHomeNet4+
+							"\n年税后工资总收入="+yearlyBaseTakeHomeNet+
+							"\n年终奖="+yearEndBonus+
+							"\n年终奖应纳税额="+bonusTaxPayable+
+							"\n年终奖税后收入="+bonusTakeHomeNet+
+							"\n******全年税后总收入*********"+
+							"\n"+actualTakeHome+
+							"\n*****************************";
+				}else{
+					storeLast = "\n全年总工资（包含季度奖）="+currentYearlyBase+
+					"\n月应发工资="+monthlyBase+
+					"\n月工资应纳税额="+monthlyTaxableIncome+
+					"\n月应纳税="+monthlyTaxPayable+
+					"\n月税后收入="+monthlyTakeHomeNet+
+					"\n年税后工资总收入="+yearlyBaseTakeHomeNet+
+					"\n年终奖="+yearEndBonus+
+					"\n年终奖应纳税额="+bonusTaxPayable+
+					"\n年终奖税后收入="+bonusTakeHomeNet+
+					"\n******全年税后总收入*********"+
+					"\n"+actualTakeHome+
+					"\n*****************************";
+				}
 			
 				
 				//System.out.println("new record=" + storeLast);
