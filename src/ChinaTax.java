@@ -30,15 +30,13 @@ public class ChinaTax {
 	
 	
 	public BigDecimal getOptimumBase(BigDecimal totalpackage, BigDecimal monthlyAllowance) throws FileNotFoundException{
-		BigDecimal yearlyBase = new BigDecimal(800000);
-		
+
 		BigDecimal currentMaxTakeHome = new BigDecimal("0");
 		BigDecimal optimumBase = new BigDecimal("0");
 		
 		System.out.println("total yearly package="+totalpackage+", monthly allowance="+monthlyAllowance);
 		
 		int totalInt = totalpackage.intValue();
-		int yearlyBaseInt = yearlyBase.intValue();
 		int allowanceInt = monthlyAllowance.intValue();
 		
 		String storeLast = "";
@@ -106,14 +104,14 @@ public class ChinaTax {
 		BigDecimal taxRate = getTaxRate(monthlyBonus);
 		BigDecimal quickDeduction = getQuickDeduction(monthlyBonus);
 		BigDecimal actualTax = totalBonus.multiply(taxRate).subtract(quickDeduction);
-		BigDecimal monthlyTakeHome = totalBonus.subtract(actualTax);
+		BigDecimal bonusTakeHome = totalBonus.subtract(actualTax);
 		
 		if(showLog) {
 			System.out.println("total Bonus=" +totalBonus);
 			System.out.println("Bonus monthly="+monthlyBonus);
 			System.out.println("taxRate="+taxRate+",quickDeduction="+quickDeduction);
 			System.out.println("actualTax="+actualTax);
-			System.out.println("monthlyTakeHome="+monthlyTakeHome);
+			System.out.println("monthlyTakeHome="+bonusTakeHome);
 		}
 		
 		return actualTax;
