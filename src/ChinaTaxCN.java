@@ -72,11 +72,10 @@ public class ChinaTaxCN {
 			
 			BigDecimal actualTakeHome = yearlyBaseTakeHomeNet.add(bonusTakeHomeNet);
 			
-			
 					
 			if(actualTakeHome.compareTo(currentMaxTakeHome)>0){
 				
-				storeLast = "\n全年总工资="+currentYearlyBase+
+				storeLast = "\n全年总工资（包含季度奖）="+currentYearlyBase+
 				"\n月应发工资="+monthlyBase+
 				"\n月工资应纳税额="+monthlyTaxableIncome+
 				"\n月应纳税="+monthlyTaxPayable+
