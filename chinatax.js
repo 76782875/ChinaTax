@@ -305,6 +305,9 @@ function btnCalc() {
 			$("#lblMonthlyAllowanceRate")[0].innerText = monthlyAllowanceRate;
 			$("#lblMonthlyMinimumAddOnCash")[0].innerText = monthlyMinimumAddOnCash;
 			
+			$("#lblTotalBaseLessQBonus")[0].innerText = (monthlyBaselbl8 * 12).toFixed(0) ;
+			$("#lblTotalQBonus")[0].innerText = (optimumBase - (monthlyBaselbl8 * 12)).toFixed(0) ;
+			
 			$("#lblBonusTaxPayable")[0].innerText = bonusTaxPayablelbl.toFixed(2);
 			$("#lblYearEndBonus")[0].innerText = bonusIntlbl.toFixed(2);
 			$("#lblBonusTakeHomeNet")[0].innerText = bonusTakeHomeNetlbl.toFixed(2);
@@ -339,6 +342,9 @@ function btnCalc() {
 			$("#lblMonthlyMinimumAddOnCash")[0].innerText = monthlyMinimumAddOnCash.toFixed(2);
 			$("#lblQuarterlyBonusRate")[0].innerText = quarterlyBonusRate;
 			$("#lblMonthlyAllowanceRate")[0].innerText = monthlyAllowanceRate;
+			
+			$("#lblTotalBaseLessQBonus")[0].innerText = (monthlyBaselbl * 12).toFixed(0) ;
+			$("#lblTotalQBonus")[0].innerText = (optimumBase - (monthlyBaselbl * 12)).toFixed(0) ;
 			
 			$("#lblBonusTaxPayable")[0].innerText = bonusTaxPayablelbl.toFixed(2);
 			$("#lblYearEndBonus")[0].innerText = bonusIntlbl.toFixed(2);
