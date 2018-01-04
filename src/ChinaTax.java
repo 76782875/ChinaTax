@@ -26,17 +26,12 @@ public class ChinaTax {
 		
 		BigDecimal monthlyTotalAllowance= rentalAllowance.add(mealAllowance).add(washingAllowance).add(monthlyyAirTicketAllowance).add(monthlyfamilyEducationAllowance).add(languageAllowance).add(monthlymovingAllowance);
 
-		BigDecimal totalPackage = new BigDecimal("1700000");
-		taxcalc.getOptimumBase(totalPackage,monthlyTotalAllowance);
+		BigDecimal totalPackage = new BigDecimal("1500000");
 		
-		totalPackage = new BigDecimal("1800000");
-		taxcalc.getOptimumBase(totalPackage,monthlyTotalAllowance);
-		
-		totalPackage = new BigDecimal("1900000");
-		taxcalc.getOptimumBase(totalPackage,monthlyTotalAllowance);
-		
-		totalPackage = new BigDecimal("2000000");
-		taxcalc.getOptimumBase(totalPackage,monthlyTotalAllowance);
+		while(totalPackage.compareTo(new BigDecimal(3000000)) < 0 ){
+			taxcalc.getOptimumBase(totalPackage,monthlyTotalAllowance);
+			totalPackage = totalPackage.add(new BigDecimal("100000"));
+		}
 	}
 	
 	
