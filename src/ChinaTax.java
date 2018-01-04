@@ -13,19 +13,30 @@ public class ChinaTax {
 		
 		ChinaTax taxcalc = new ChinaTax();
 		//https://zhidao.baidu.com/question/1735056546596979387.html 
-		BigDecimal monthlyAllowance= new BigDecimal("60000");
+		BigDecimal rentalAllowance = new BigDecimal("15000");
+		BigDecimal mealAllowance = new BigDecimal("15000");
+		BigDecimal washingAllowance = new BigDecimal("6000");
+		BigDecimal languageAllowance = new BigDecimal("0");
+		BigDecimal yearlymovingAllowance = new BigDecimal("0");
+		BigDecimal yearlyAirTicketAllowance = new BigDecimal("40000");
+		BigDecimal yearlyfamilyEducationAllowance = new BigDecimal("400000");
+		BigDecimal monthlyyAirTicketAllowance = yearlyAirTicketAllowance.divide(new BigDecimal("12"), RoundingMode.HALF_UP);
+		BigDecimal monthlymovingAllowance = yearlymovingAllowance.divide(new BigDecimal("12"), RoundingMode.HALF_UP);
+		BigDecimal monthlyfamilyEducationAllowance = yearlyfamilyEducationAllowance.divide(new BigDecimal("12"), RoundingMode.HALF_UP);
+		
+		BigDecimal monthlyTotalAllowance= rentalAllowance.add(mealAllowance).add(washingAllowance).add(monthlyyAirTicketAllowance).add(monthlyfamilyEducationAllowance).add(languageAllowance).add(monthlymovingAllowance);
 
 		BigDecimal totalPackage = new BigDecimal("1700000");
-		taxcalc.getOptimumBase(totalPackage,monthlyAllowance);
+		taxcalc.getOptimumBase(totalPackage,monthlyTotalAllowance);
 		
 		totalPackage = new BigDecimal("1800000");
-		taxcalc.getOptimumBase(totalPackage,monthlyAllowance);
+		taxcalc.getOptimumBase(totalPackage,monthlyTotalAllowance);
 		
 		totalPackage = new BigDecimal("1900000");
-		taxcalc.getOptimumBase(totalPackage,monthlyAllowance);
+		taxcalc.getOptimumBase(totalPackage,monthlyTotalAllowance);
 		
 		totalPackage = new BigDecimal("2000000");
-		taxcalc.getOptimumBase(totalPackage,monthlyAllowance);
+		taxcalc.getOptimumBase(totalPackage,monthlyTotalAllowance);
 	}
 	
 	

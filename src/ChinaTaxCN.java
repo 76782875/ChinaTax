@@ -14,27 +14,42 @@ public class ChinaTaxCN {
 		ChinaTaxCN taxcalc = new ChinaTaxCN();
 		//https://zhidao.baidu.com/question/1735056546596979387.html 
 		System.out.println("****************************");
-		System.out.println("每月住房补贴=15000");
-		System.out.println("每月伙食补贴=10000");
+
+		BigDecimal rentalAllowance = new BigDecimal("15000");
+		BigDecimal mealAllowance = new BigDecimal("10000");
+		BigDecimal washingAllowance = new BigDecimal("6000");
+		BigDecimal languageAllowance = new BigDecimal("0");
+		BigDecimal yearlymovingAllowance = new BigDecimal("0");
+		BigDecimal yearlyAirTicketAllowance = new BigDecimal("40000");
+		BigDecimal yearlyfamilyEducationAllowance = new BigDecimal("400000");
+		BigDecimal monthlyyAirTicketAllowance = yearlyAirTicketAllowance.divide(new BigDecimal("12"), RoundingMode.HALF_UP);
+		BigDecimal monthlymovingAllowance = yearlymovingAllowance.divide(new BigDecimal("12"), RoundingMode.HALF_UP);
+		BigDecimal monthlyfamilyEducationAllowance = yearlyfamilyEducationAllowance.divide(new BigDecimal("12"), RoundingMode.HALF_UP);
+		
+		BigDecimal monthlyTotalAllowance= rentalAllowance.add(mealAllowance).add(washingAllowance).add(monthlyyAirTicketAllowance).add(monthlyfamilyEducationAllowance).add(languageAllowance).add(monthlymovingAllowance);
+		
+		System.out.println("每月住房补贴="+rentalAllowance);
+		System.out.println("每月伙食补贴="+mealAllowance);
 		System.out.println("一次性搬迁费=0");
-		System.out.println("每月洗衣费=6000 （每天=200）");
-		System.out.println("每年回新加坡探亲费两次=40000， 分摊到每月=3333 （按新加坡航空票费）");
+		System.out.println("每月洗衣费（每天=200）="+washingAllowance);
+		System.out.println("每年回新加坡探亲费两次="+yearlyAirTicketAllowance+"， 分摊到每月="+monthlyyAirTicketAllowance+" （按新加坡航空票费）");
 		System.out.println("每月语言训练费=0");
-		System.out.println("每年子女教育费=400000，分摊到每月= 33333 ");
-		System.out.println("每月总报销额 = 67666 ");
-		BigDecimal monthlyAllowance= new BigDecimal("67666");
+		System.out.println("每年子女教育费="+yearlyfamilyEducationAllowance+"，分摊到每月= "+monthlyfamilyEducationAllowance+" ");
+		System.out.println("每月总报销额 = "+monthlyTotalAllowance);
+		
 		System.out.println("*****************************");
+		
 		BigDecimal totalPackage = new BigDecimal("1700000");
-		taxcalc.getOptimumBase(totalPackage,monthlyAllowance);
+		taxcalc.getOptimumBase(totalPackage,monthlyTotalAllowance);
 		
 		totalPackage = new BigDecimal("1800000");
-		taxcalc.getOptimumBase(totalPackage,monthlyAllowance);
+		taxcalc.getOptimumBase(totalPackage,monthlyTotalAllowance);
 		
 		totalPackage = new BigDecimal("1900000");
-		taxcalc.getOptimumBase(totalPackage,monthlyAllowance);
+		taxcalc.getOptimumBase(totalPackage,monthlyTotalAllowance);
 		
 		totalPackage = new BigDecimal("2000000");
-		taxcalc.getOptimumBase(totalPackage,monthlyAllowance);
+		taxcalc.getOptimumBase(totalPackage,monthlyTotalAllowance);
 	}
 	
 	
