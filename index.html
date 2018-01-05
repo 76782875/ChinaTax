@@ -40,8 +40,7 @@
 				<tr>
 					<td>每年探亲费</td>
 					<td><input id="yearlyAirTicketAllowance" name="" type="text" value="40000"><span>元</span></td>
-					<td>每月</td>
-					<td><label id="lblMonthlyyAirTicketAllowance">0</label><span>元</span></td>
+					<td>每月<label id="lblMonthlyyAirTicketAllowance">0</label><span>元</span></td>
 				</tr>
 				<tr>
 					<td>每月语言训练补贴</td>
@@ -50,8 +49,7 @@
 				<tr>
 					<td>每年子女教育费</td>
 					<td><input id="yearlyfamilyEducationAllowance" name="" type="text" value="400000"><span>元</span></td>
-					<td>每月</td>
-					<td><label id="lblMonthlyfamilyEducationAllowance">0</label><span>元</span></td>
+					<td>每月<label id="lblMonthlyfamilyEducationAllowance">0</label><span>元</span></td>
 				</tr>
 				<tr>
 					<td>各项社会保险费</td>
@@ -81,8 +79,13 @@
 						<button type="button" onclick="btnCalc()" class="btn btn-primary" >
   								计算最佳方案
 						</button>
+					</td>
+					<td>
 						<button type="button" onclick="btnReset()" class="btn btn-secondary">
-  								重置
+  								外籍重置
+						</button>
+						<button type="button" onclick="btnResetLocal()" class="btn btn-secondary">
+  								中国公民重置
 						</button>
 					</td>
 				</tr>

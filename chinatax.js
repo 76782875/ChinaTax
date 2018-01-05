@@ -6,10 +6,31 @@ function btnReset() {
   $("#mealAllowance")[0].value = 0;
   $("#yearlymovingAllowance")[0].value = 0;
   $("#washingAllowance")[0].value = 0;
-  $("#yearlyAirTicketAllowance")[0].value = 0;
+  $("#yearlyAirTicketAllowance")[0].value = 40000;
   $("#languageAllowance")[0].value = 0;
   $("#yearlyfamilyEducationAllowance")[0].value = 400000;
   $("#monthlySocialSecurity")[0].value = 3117;
+  $("#foreignerStartingPoint")[0].value = 4800;
+  $("#monthlyAllowanceRate")[0].value =35;
+  
+}
+
+
+function btnResetLocal() {
+
+  restResult();
+  $("#totalPackage")[0].value = 1800000;
+  $("#rentalAllowance")[0].value = 0;
+  $("#mealAllowance")[0].value = 0;
+  $("#yearlymovingAllowance")[0].value = 0;
+  $("#washingAllowance")[0].value = 0;
+  $("#yearlyAirTicketAllowance")[0].value = 0;
+  $("#languageAllowance")[0].value = 0;
+  $("#yearlyfamilyEducationAllowance")[0].value = 0;
+  $("#monthlySocialSecurity")[0].value = 3117;
+  $("#foreignerStartingPoint")[0].value = 3500;
+  $("#monthlyAllowanceRate")[0].value = 0;
+  
   
 }
 
