@@ -67,8 +67,7 @@ function restResult(){
   $("#lblBonusQuickDeduction")[0].innerText = 0;
   $("#lblBonusTaxPayable")[0].innerText = 0;
   $("#lblBonusTakeHomeNet")[0].innerText = 0;
-  $("#totalPackage")[0].focus();
-  $("#totalPackage")[0].select();
+
 }
 
 function btnCalc() {
@@ -92,7 +91,7 @@ function btnCalc() {
     return;
   }
   var monthlyfamilyEducationAllowance = parseFloat(yearlyfamilyEducationAllowance)/12;
-  $("#lblMonthlyfamilyEducationAllowance")[0].innerText = monthlyfamilyEducationAllowance;
+  $("#lblMonthlyfamilyEducationAllowance")[0].innerText = monthlyfamilyEducationAllowance.toFixed(2);
   
   var foreignerStartingPoint = parseFloat($("#foreignerStartingPoint").val());
   if (isNaN(foreignerStartingPoint)) {
@@ -111,7 +110,7 @@ function btnCalc() {
     return;
   }
   var monthlyAirTicketAllowance = parseFloat(yearlyAirTicketAllowance)/12;
-  $("#lblMonthlyyAirTicketAllowance")[0].innerText = monthlyAirTicketAllowance;
+  $("#lblMonthlyyAirTicketAllowance")[0].innerText = monthlyAirTicketAllowance.toFixed(2);
   
   
   var yearlymovingAllowance = parseFloat($("#yearlymovingAllowance").val());
