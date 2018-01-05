@@ -258,14 +258,14 @@ function btnCalc() {
 			
 			monthlyTaxableIncome8 = monthlyBase8 - allowanceInt;
 			monthlyTaxPayable8 = calculateMonthlyTax(monthlyTaxableIncome8, foreignerStartingPoint ,monthlySocialSecurity);
-			monthlyTakeHomeNet8 = monthlyTaxableIncome8 - monthlyTaxPayable8 - monthlySocialSecurity;
-			monthTakeHomeNet8 = monthlyTakeHomeNet8 * 8;
+			monthlyTakeHomeNet8 = monthlyBase8 - monthlyTaxPayable8 - monthlySocialSecurity;
+			monthTakeHomeNet8 =  monthlyTakeHomeNet8* 8;
 			
 			
 			monthlyBase4 = monthlyBase8 * 3 * quarterlyBonusRate/100 + monthlyBase8;
 			monthlyTaxableIncome4 = monthlyBase4 - allowanceInt;
 			monthlyTaxPayable4 = calculateMonthlyTax(monthlyTaxableIncome4, foreignerStartingPoint ,monthlySocialSecurity);
-			monthlyTakeHomeNet4 = monthlyTaxableIncome4 - monthlyTaxPayable4 - monthlySocialSecurity;
+			monthlyTakeHomeNet4 =  monthlyBase4 - monthlyTaxPayable4 - monthlySocialSecurity;
 			
 			monthTakeHomeNet4 = monthlyTakeHomeNet4 * 4 ;
 			
@@ -279,7 +279,7 @@ function btnCalc() {
 			allowanceInt = monthlyBase * (monthlyAllowanceRate/100);
 			monthlyTaxableIncome = monthlyBase - allowanceInt;
 			monthlyTaxPayable = calculateMonthlyTax(monthlyTaxableIncome, foreignerStartingPoint ,monthlySocialSecurity);
-			monthlyTakeHomeNet = monthlyTaxableIncome - monthlyTaxPayable - monthlySocialSecurity;
+			monthlyTakeHomeNet =  monthlyBase - monthlyTaxPayable - monthlySocialSecurity;
 			yearlyBaseTakeHomeNet = monthlyTakeHomeNet * 12;
 		}
 		
