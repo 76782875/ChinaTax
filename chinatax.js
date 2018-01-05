@@ -1,7 +1,7 @@
 function btnReset() {
 
   restResult();
-  $("#totalPackage")[0].value = 2000000;
+  $("#totalPackage")[0].value = 1800000;
   $("#rentalAllowance")[0].value = 15000;
   $("#mealAllowance")[0].value = 0;
   $("#yearlymovingAllowance")[0].value = 0;
@@ -51,7 +51,9 @@ function restResult(){
 }
 
 function btnCalc() {
+ 
   restResult();
+
   var totalPackage = parseFloat($("#totalPackage").val());
   if (isNaN(totalPackage)) {
     alert("无效的收入金额");
@@ -70,6 +72,15 @@ function btnCalc() {
   }
   var monthlyfamilyEducationAllowance = parseFloat(yearlyfamilyEducationAllowance)/12;
   $("#lblMonthlyfamilyEducationAllowance")[0].innerText = monthlyfamilyEducationAllowance;
+  
+  var foreignerStartingPoint = parseFloat($("#foreignerStartingPoint").val());
+  if (isNaN(foreignerStartingPoint)) {
+    alert("无效的工资起征点");
+    $("#foreignerStartingPoint")[0].focus();
+    $("#foreignerStartingPoint")[0].select();
+    return;
+  }
+  $("#lblForeignerStartingPoint")[0].innerText = foreignerStartingPoint;
   
   var yearlyAirTicketAllowance = parseFloat($("#yearlyAirTicketAllowance").val());
   if (isNaN(yearlyAirTicketAllowance)) {
@@ -158,7 +169,7 @@ function btnCalc() {
   
   
   
-    var foreignerStartingPoint = parseFloat($("#lblForeignerStartingPoint")[0].innerText);
+    
 
     
     var monthlyTotalAllowance= rentalAllowance + mealAllowance + washingAllowance + monthlyAirTicketAllowance + monthlyfamilyEducationAllowance + languageAllowance + monthlymovingAllowance ;
@@ -219,9 +230,6 @@ function btnCalc() {
 		var monthlyTakeHomeNet4=0;
 		var monthTakeHomeNet4=0;
 			
-		if(currentYearlyBase==1481000){
-			console.log("stop");
-		}
 		if(quarterlyBonusRate>0){
 		
 		    monthlyBase8 = currentYearlyBase/(12*(quarterlyBonusRate/100+1));
@@ -370,7 +378,7 @@ function btnCalc() {
 			$("#lblYearlyBaseTakeHomeNet")[0].innerText = yearlyBaseTakeHomeNetlbl.toFixed(2);
 			$("#lblActualTakeHome")[0].innerText = actualTakeHomelbl.toFixed(2);
 	}
-		
+    
 }
 
 
