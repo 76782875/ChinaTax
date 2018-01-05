@@ -253,9 +253,7 @@ function btnCalc() {
 		if(quarterlyBonusRate>0){
 		
 		    monthlyBase8 = currentYearlyBase/(12*(quarterlyBonusRate/100+1));
-			
-			
-			
+
 			allowanceInt = monthlyBase8 * (monthlyAllowanceRate/100);
 			
 			monthlyTaxableIncome8 = monthlyBase8 - allowanceInt;
@@ -263,6 +261,9 @@ function btnCalc() {
 			monthlyTakeHomeNet8 = monthlyTaxableIncome8 - monthlyTaxPayable8 - monthlySocialSecurity;
 			monthTakeHomeNet8 = monthlyTakeHomeNet8 * 8;
 			
+			if( monthlyTaxableIncome8 < monthlyMinimumAddOnCash ){
+				continue;
+			}
 			
 			monthlyBase4 = monthlyBase8 * 3 * quarterlyBonusRate/100 + monthlyBase8;
 			monthlyTaxableIncome4 = monthlyBase4 - allowanceInt;
