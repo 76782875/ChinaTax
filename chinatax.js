@@ -263,9 +263,6 @@ function btnCalc() {
 			monthlyTakeHomeNet8 = monthlyTaxableIncome8 - monthlyTaxPayable8 - monthlySocialSecurity;
 			monthTakeHomeNet8 = monthlyTakeHomeNet8 * 8;
 			
-			if( monthlyTakeHomeNet8 < monthlyMinimumAddOnCash ){
-				continue;
-			}
 			
 			monthlyBase4 = monthlyBase8 * 3 * quarterlyBonusRate/100 + monthlyBase8;
 			monthlyTaxableIncome4 = monthlyBase4 - allowanceInt;
