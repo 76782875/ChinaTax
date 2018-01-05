@@ -378,7 +378,7 @@ function btnCalc() {
 			$("#lblYearlyBaseTakeHomeNet")[0].innerText = yearlyBaseTakeHomeNetlbl.toFixed(2);
 			$("#lblActualTakeHome")[0].innerText = actualTakeHomelbl.toFixed(2);
 	}
-    
+   
 }
 
 
