@@ -234,9 +234,7 @@ function btnCalc() {
 		
 		    monthlyBase8 = currentYearlyBase/(12*(quarterlyBonusRate/100+1));
 			
-			if( monthlyBase8 < minimumMonthlyCash ){
-				continue;
-			}
+			
 			
 			allowanceInt = monthlyBase8 * (monthlyAllowanceRate/100);
 			
@@ -245,10 +243,15 @@ function btnCalc() {
 			monthlyTakeHomeNet8 = monthlyTaxableIncome8 - monthlyTaxPayable8 - monthlySocialSecurity;
 			monthTakeHomeNet8 = monthlyTakeHomeNet8 * 8;
 			
+			if( monthlyTakeHomeNet8 < monthlyMinimumAddOnCash ){
+				continue;
+			}
+			
 			monthlyBase4 = monthlyBase8 * 3 * quarterlyBonusRate/100 + monthlyBase8;
 			monthlyTaxableIncome4 = monthlyBase4 - allowanceInt;
 			monthlyTaxPayable4 = calculateMonthlyTax(monthlyTaxableIncome4, foreignerStartingPoint ,monthlySocialSecurity);
 			monthlyTakeHomeNet4 = monthlyTaxableIncome4 - monthlyTaxPayable4 - monthlySocialSecurity;
+			
 			monthTakeHomeNet4 = monthlyTakeHomeNet4 * 4 ;
 			
 			yearlyBaseTakeHomeNet = monthTakeHomeNet8 + monthTakeHomeNet4 ;
@@ -258,14 +261,13 @@ function btnCalc() {
 		    
 			monthlyBase = (currentYearlyBase/12);
 			
-			if( monthlyBase < minimumMonthlyCash ){
-				continue;
-			}
-			
 			allowanceInt = monthlyBase * (monthlyAllowanceRate/100);
 			monthlyTaxableIncome = monthlyBase - allowanceInt;
 			monthlyTaxPayable = calculateMonthlyTax(monthlyTaxableIncome, foreignerStartingPoint ,monthlySocialSecurity);
 			monthlyTakeHomeNet = monthlyTaxableIncome - monthlyTaxPayable - monthlySocialSecurity;
+			if( monthlyTakeHomeNet < monthlyMinimumAddOnCash ){
+				continue;
+			}
 			yearlyBaseTakeHomeNet = monthlyTakeHomeNet * 12;
 		}
 		
