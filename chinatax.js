@@ -178,19 +178,6 @@ function btnCalc() {
     return;
   }
   
-  
-  var monthlyMinimumAddOnCash = parseFloat($("#monthlyMinimumAddOnCash").val());
-  if (isNaN(monthlyMinimumAddOnCash)) {
-    alert("无效的可报销百分比");
-    $("#monthlyMinimumAddOnCash")[0].focus();
-    $("#monthlyMinimumAddOnCash")[0].select();
-    return;
-  }
-  
-  
-  
-    
-
     
     var monthlyTotalAllowance= rentalAllowance + mealAllowance + washingAllowance + monthlyAirTicketAllowance + monthlyfamilyEducationAllowance + languageAllowance + monthlymovingAllowance ;
 		
@@ -199,8 +186,8 @@ function btnCalc() {
     var optimumBase = 0;
 	var totalInt = totalPackage;
 	var allowanceInt = monthlyTotalAllowance;
-	
-	var minimumMonthlyCash = monthlyMinimumAddOnCash + monthlyTotalAllowance
+
+	var minimumMonthlyCash = 20000 + monthlyTotalAllowance
 	
 	var yearlyAllowanceInt = minimumMonthlyCash * 12;
 	
@@ -325,7 +312,6 @@ function btnCalc() {
 			$("#lblMonthlySocialSecurity")[0].innerText = monthlySocialSecurity.toFixed(2);
 			$("#lblQuarterlyBonusRate")[0].innerText = quarterlyBonusRate.toFixed(2);
 			$("#lblMonthlyAllowanceRate")[0].innerText = monthlyAllowanceRate;
-			$("#lblMonthlyMinimumAddOnCash")[0].innerText = monthlyMinimumAddOnCash;
 			
 			$("#lblTotalBaseLessQBonus")[0].innerText = (monthlyBaselbl8 * 12).toFixed(0) ;
 			$("#lblTotalQBonus")[0].innerText = (optimumBase - (monthlyBaselbl8 * 12)).toFixed(0) ;
@@ -361,7 +347,6 @@ function btnCalc() {
 			$("#lblTotalBase")[0].innerText = optimumBase.toFixed(2);
 			$("#lblMonthlySocialSecurity")[0].innerText = monthlySocialSecurity.toFixed(2);
 			$("#lblMonthlyAllowanceRate")[0].innerText = monthlyAllowanceRate.toFixed(2);
-			$("#lblMonthlyMinimumAddOnCash")[0].innerText = monthlyMinimumAddOnCash.toFixed(2);
 			$("#lblQuarterlyBonusRate")[0].innerText = quarterlyBonusRate;
 			$("#lblMonthlyAllowanceRate")[0].innerText = monthlyAllowanceRate;
 			
