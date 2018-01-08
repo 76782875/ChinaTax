@@ -79,11 +79,6 @@
 					<td></td>
 				</tr>
 				<tr>
-					<td>每月额外生活必需金额</td>
-					<td><input id="monthlyMinimumAddOnCash" name="" type="text" value="50000"><span>元</span></td>
-					<td>(除去读书租房等刚需部分)</td>
-				</tr>
-				<tr>
 					<td>						
 						<button type="button" onclick="btnCalc()" class="btn btn-primary" >
   								计算最佳方案
@@ -125,11 +120,7 @@
 					<td><label id="lblMonthlyAllowanceRate">0</label> <span>%</span></td>
 					<td></td>
 				</tr>
-				<tr>
-					<td>每月额外生活必需</td>
-					<td><label id="lblMonthlyMinimumAddOnCash">0</label> <span>元</span></td>
-					<td>(除去读书租房等刚需部分)</td>
-				</tr>
+
 				<tr>
 					<td>季度奖月工资起征点</td>
 					<td><label id="lblForeignerStartingPoint">4800</label> <span>元</span></td>
@@ -140,13 +131,7 @@
 					<td><label id="lblMonthlySocialSecurity">3117</label><span>元</span></td>
 					<td></td>
 				</tr>
-				
-				<tr>
-					<td>每月总报销额</td>
-					<td><label id="lblMonthlyTotalAllowance">0</label> <span>元</span></td>
-					<td>(以实报实销或者非现金方式）</td>
-				</tr>
-				
+
 				<tr  class="table-success">
 					<td>全年总工资（包含季度奖）</td>
 					<td><strong><label id="lblTotalBase">0</label> <span>元</span></strong></td>
@@ -157,7 +142,16 @@
 					<td><label id="lblMonthlyBase8">0</label> <span>元</span></td>
 					<td>平常月指1，2，4，5，7，8，10，11这8个月</td>
 				</tr>
-
+				<tr>
+					<td>平常月可报销额</td>
+					<td><label id="lblMonthlyTotalAllowance8">0</label> <span>元</span></td>
+					<td>(以实报实销或者非现金方式）</td>
+				</tr>
+				<tr>
+					<td>平常月各项社会保险费</td>
+					<td><label id="lblMonthlySocialSecurity8">3117</label><span>元</span></td>
+					<td></td>
+				</tr>
 				<tr>
 					<td>平常月工资应纳税额</td>
 					<td><label id="lblMonthlyTaxableIncome8">0</label> <span></span></td>
@@ -188,7 +182,11 @@
 					<td><label id="lblMonthlyBase4">0</label> <span>元</span></td>
 					<td>季度奖月指3，6，9，12这4个月</td>
 				</tr>
-				
+				<tr>
+					<td>季度奖月可报销额</td>
+					<td><label id="lblMonthlyTotalAllowance4">0</label> <span>元</span></td>
+					<td>(以实报实销或者非现金方式）</td>
+				</tr>
 				<tr>
 					<td>季度奖月各项社会保险费</td>
 					<td><label id="lblMonthlySocialSecurity4">3117</label><span>元</span></td>
