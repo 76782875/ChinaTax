@@ -306,7 +306,6 @@ function btnCalc() {
 	if(quarterlyBonusRate>0){
 	        var monthlyBonus2 = bonusIntlbl / 12 ;
 	        
-	        $("#lblMonthlyTotalAllowance")[0].innerText = monthlyTotalAllowance.toFixed(2);
 			$("#lblTotalBase")[0].innerText = optimumBase.toFixed(2);
 			$("#lblMonthlySocialSecurity")[0].innerText = monthlySocialSecurity.toFixed(2);
 			$("#lblQuarterlyBonusRate")[0].innerText = quarterlyBonusRate.toFixed(2);
@@ -342,7 +341,6 @@ function btnCalc() {
 	}else{
 		    var monthlyBonus2 = bonusIntlbl / 12 ;
 	        
-	        $("#lblMonthlyTotalAllowance")[0].innerText = monthlyTotalAllowance.toFixed(2);
 			$("#lblTotalBase")[0].innerText = optimumBase.toFixed(2);
 			$("#lblMonthlySocialSecurity")[0].innerText = monthlySocialSecurity.toFixed(2);
 			$("#lblMonthlyAllowanceRate")[0].innerText = monthlyAllowanceRate.toFixed(2);
