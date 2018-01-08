@@ -40,7 +40,6 @@ function restResult(){
   
   $("#lblMonthlyfamilyEducationAllowance")[0].innerText = 0;
   $("#lblMonthlyyAirTicketAllowance")[0].innerText = 0;
-  $("#lblMonthlyTotalAllowance")[0].innerText = 0;
   $("#lblForeignerStartingPoint")[0].innerText = 4800;
   $("#lblMonthlySocialSecurity")[0].innerText = 0;
   
